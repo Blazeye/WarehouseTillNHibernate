@@ -1,4 +1,5 @@
-﻿using WarehouseTill.products;
+﻿using System.Collections.Generic;
+using WarehouseTill.products;
 
 namespace WarehouseTill.repository
 {
@@ -9,7 +10,7 @@ namespace WarehouseTill.repository
         void Remove(Product product);
         Product GetById(int productId);
         Product GetByBarcode(string barcode);
-
+        List<IProduct> GetAllProducts();
     }
 }
 

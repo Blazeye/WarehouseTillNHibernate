@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using WarehouseTill.database;
 using WarehouseTill.products;
 
+
 namespace WarehouseTill.repository
 {
-    public class ProductRepository : IProductRepository
+    class PurchaseRepository : IPurchaseRepository
     {
         public void Add(Product product)
         {
@@ -28,15 +28,6 @@ namespace WarehouseTill.repository
             }
         }
 
-        public Product GetByBarcode(string barcode)
-        {
-            using (var session = NHibernateSession.OpenSession())
-            {
-                var query = session.CreateQuery("from Product where Barcode=:barcode");
-                query.SetString("barcode", barcode);
-                return query.UniqueResult<Product>();
-            }
-        }
 
         public Product GetById(int productId)
         {
@@ -85,18 +76,6 @@ namespace WarehouseTill.repository
                         throw ex;
                     }
                 }
-            }
-        }
-
-        public List<IProduct> GetAllProducts()
-        {
-            using (var session = NHibernateSession.OpenSession())
-            {
-                //var products = session.CreateQuery("from Product").List<Product>();
-                var products = session
-                    .CreateCriteria(typeof(Product))
-                    .List<IProduct>();
-                return (List<IProduct>)products;
             }
         }
     }

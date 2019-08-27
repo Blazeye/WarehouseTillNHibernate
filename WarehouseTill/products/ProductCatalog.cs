@@ -13,14 +13,15 @@ namespace WarehouseTill.products
         public ProductCatalog()
         {
             // Add 4 example products to the internal data structure of this catalog here
-            ProductList = new List<IProduct>{
-                new Product("1234", "Bonko-boter, weer 'ns echte roomboter...", 2.120m) { },
-                new Product("9902", "St. Jantje: De beste komijnenkaas!", 8.430m) { },
-                new Product("3568", "Berensterke botten met Borbonje!", 1.230m) { },
-                new Product("7324", "Eieren, van vrijlopende scharrelkippen.", 1.750m) { },
-            };
-
-            GetAllProducts();
+            ProductList = new List<IProduct>();
+            //{
+            //    new Product("1234", "Bonko-boter, weer 'ns echte roomboter...", 2.120m) { },
+            //    new Product("9902", "St. Jantje: De beste komijnenkaas!", 8.430m) { },
+            //    new Product("3568", "Berensterke botten met Borbonje!", 1.230m) { },
+            //    new Product("7324", "Eieren, van vrijlopende scharrelkippen.", 1.750m) { },
+            //};
+            IProductRepository repository = new ProductRepository();
+            ProductList = repository.GetAllProducts();
 
         }
 
@@ -30,19 +31,21 @@ namespace WarehouseTill.products
         /// <returns>the product or <c>null</c> if not found</returns>
         public IProduct FindProductForBarcode(string barcode)
         {
-            IProductRepository repository = new ProductRepository();
+
             Product rightProduct = null;
-            rightProduct = repository.GetByBarcode(barcode);
+
+            //IProductRepository repository = new ProductRepository();
+            //rightProduct = repository.GetByBarcode(barcode);
 
 
-            //foreach (Product item in ProductList)
-            //{
-            //    if (item.Barcode == barcode)
-            //    {
-            //        rightProduct = item;
-            //        break;
-            //    }
-            //}
+            foreach (Product item in ProductList)
+            {
+                if (item.Barcode == barcode)
+                {
+                    rightProduct = item;
+                    break;
+                }
+            }
             return rightProduct;
         }
 
