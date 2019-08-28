@@ -15,8 +15,9 @@ namespace WarehouseTill.products
             var result = sut.GetAllProducts();
 
             // Analyze
+            //Must do the test at least one to add the test product
             Assert.NotNull(result);
-            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(5, result.Count);
             Assert.AreEqual("1234", result[0].Barcode);
         }
 

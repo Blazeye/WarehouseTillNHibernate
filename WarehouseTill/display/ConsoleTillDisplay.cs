@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WarehouseTill.model;
 using WarehouseTill.products;
+using WarehouseTill.repository;
 using WarehouseTill.till;
 
 namespace WarehouseTill.display
@@ -15,7 +17,7 @@ namespace WarehouseTill.display
 
         public ConsoleTillDisplay(ITill till)
         {
-            if(till == null)
+            if (till == null)
             {
                 throw new till.ArgumentNullException("object is null");
             }
@@ -25,7 +27,7 @@ namespace WarehouseTill.display
                 // Install ourselfs as display target
                 Till.SetDisplayInterface((ITillDisplay)this);
             }
-            catch(till.ArgumentNullException e2)
+            catch (till.ArgumentNullException e2)
             {
                 Console.WriteLine(e2.ToString());
             }
@@ -47,7 +49,7 @@ namespace WarehouseTill.display
                         break;
 
                     case "b":
-                        if(input == "b")
+                        if (input == "b")
                         {
                             Console.WriteLine("Customer hasn't paid");
                             break;
@@ -60,6 +62,9 @@ namespace WarehouseTill.display
                         }
                         else if (result.Count == 0)
                         {
+                            var order = new Purchase();
+
+                            Till.AddOrder();
                             Console.Out.WriteLine("Payment successful");
                         }
                         else
@@ -73,6 +78,7 @@ namespace WarehouseTill.display
                                 }
                                 resultString.AppendFormat("{0:c}: {1}x", pair.Key, pair.Value);
                             }
+                            Till.AddOrder();
                             Console.Out.WriteLine("Payment done, please return {0}", resultString.ToString());
                         }
                         break;

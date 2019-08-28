@@ -77,7 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="database\GenerateSchemaFixture.cs" />
+    <Compile Include="database\OrdersProductRepositoryFixture.cs" />
     <Compile Include="database\ProductRepositoryFixture.cs" />
+    <Compile Include="database\PurchaseRepositoryFixture.cs" />
     <Compile Include="display\TestDisplay.cs" />
     <Compile Include="products\ProductCatalogTest.cs" />
     <Compile Include="products\ProductTest.cs" />

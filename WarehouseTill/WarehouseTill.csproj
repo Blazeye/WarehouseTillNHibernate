@@ -88,14 +88,22 @@
     <Compile Include="database\NHibernateSession.cs" />
     <Compile Include="display\ConsoleTillDisplay.cs" />
     <Compile Include="display\ITillDisplay.cs" />
+    <Compile Include="model\IOrdersProduct.cs" />
+    <Compile Include="model\IPurchase.cs" />
+    <Compile Include="model\OrdersProduct.cs" />
+    <Compile Include="model\Purchase.cs" />
     <Compile Include="products\IProduct.cs" />
     <Compile Include="products\IProductCatalog.cs" />
     <Compile Include="products\Product.cs" />
     <Compile Include="products\ProductCatalog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="repository\IOrdersProductRepository.cs" />
     <Compile Include="repository\IProductRepository.cs" />
+    <Compile Include="repository\IPurchaseRepository.cs" />
+    <Compile Include="repository\OrdersProductRepository.cs" />
     <Compile Include="repository\ProductRepository.cs" />
+    <Compile Include="repository\PurchaseRepository.cs" />
     <Compile Include="till\CashRegister.cs" />
     <Compile Include="till\ICashRegister.cs" />
     <Compile Include="till\ITill.cs" />
@@ -119,12 +127,17 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="database\Purchase.hbm.xml" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="database\hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <EmbeddedResource Include="database\Product.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="database\OrdersProduct.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

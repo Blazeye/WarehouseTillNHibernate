@@ -10,7 +10,7 @@ namespace EventsTillTest.till
     {
         public bool BarcodeToReturn { get; set; } = false;
         public IDictionary<decimal, int> ChangeToReturn = null;
-        public List<IProduct> cart = new List<IProduct>();
+        public List<IProduct> cart { get; set; } = new List<IProduct>();
         private decimal sum { get; set; } = 0;
         private IProductCatalog List { get; set; } = null;
         private ITillDisplay Display { get; set; } = null;
@@ -37,6 +37,10 @@ namespace EventsTillTest.till
         public void ShowScannedItems()
         {
             
+        }
+        public void AddOrder()
+        {
+
         }
     }
 }

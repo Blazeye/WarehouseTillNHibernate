@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="WarehouseTill" namespace="WarehouseTill.model">
+  <class name="OrdersProduct" table="OrdersProduct" dynamic-update="true">
+    <cache usage="read-write"/>
+    <id name="Id" column="Id" type="int">
+      <generator class="native"/>
+    </id>
+
+    <property name="Item_id"/>
+    <property name="Order_id"/>
+    <property name="Amount"/>
+    <property name="Price"/>
+  </class>
+</hibernate-mapping>

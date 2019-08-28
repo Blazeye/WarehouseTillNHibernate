@@ -1,14 +1,12 @@
 ﻿using System;
 using WarehouseTill.database;
-using WarehouseTill.products;
 using WarehouseTill.model;
-
 
 namespace WarehouseTill.repository
 {
-    public class PurchaseRepository : IPurchaseRepository
+    public class OrdersProductRepository : IOrdersProductRepository
     {
-        public void Add(Purchase purchase)
+        public void Add(OrdersProduct ordersProduct)
         {
             using (var session = NHibernateSession.OpenSession())
             {
@@ -17,7 +15,7 @@ namespace WarehouseTill.repository
                 {
                     try
                     {
-                        session.Save(purchase);
+                        session.Save(ordersProduct);
                         tx.Commit();
                     }
                     catch (Exception ex)
@@ -46,12 +44,8 @@ namespace WarehouseTill.repository
                     }
                 }
             }
-            //using (var session = NHibernateSession.OpenSession())
-            //{
-            //    return session.Get<Purchase>(purchaseId);
-            //}
         }
-        public void Remove(Purchase purchase)
+        public void Remove(OrdersProduct ordersProduct)
         {
             using (var session = NHibernateSession.OpenSession())
             {
@@ -59,7 +53,7 @@ namespace WarehouseTill.repository
                 {
                     try
                     {
-                        session.Delete(purchase);
+                        session.Delete(ordersProduct);
                         tx.Commit();
                     }
                     catch (Exception ex)
@@ -70,7 +64,7 @@ namespace WarehouseTill.repository
                 }
             }
         }
-        public void Update(Purchase purchase)
+        public void Update(OrdersProduct ordersProduct)
         {
             using (var session = NHibernateSession.OpenSession())
             {
@@ -79,7 +73,7 @@ namespace WarehouseTill.repository
                 {
                     try
                     {
-                        session.Update(purchase);
+                        session.Update(ordersProduct);
                         tx.Commit();
                     }
                     catch (Exception ex)

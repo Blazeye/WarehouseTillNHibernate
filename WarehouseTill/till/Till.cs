@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using WarehouseTill.display;
+using WarehouseTill.model;
 using WarehouseTill.products;
+using WarehouseTill.repository;
 
 namespace WarehouseTill.till
 {
     public class Till : ITill
     {
-        public List<IProduct> cart = new List<IProduct>();
+        public List<IProduct> cart{ get; set; } = new List<IProduct>();
         //private decimal sum { get; set; }
         private IProductCatalog Catalog { get; set; }
         private ICashRegister Register { get; }
@@ -67,7 +69,6 @@ namespace WarehouseTill.till
             {
                 return result;
             }
-            cart.Clear();
             return result;
         }
 
@@ -121,6 +122,42 @@ namespace WarehouseTill.till
         {
             decimal sum = Decimal.Round(cart.Sum(p => p.Amount), 2);
             return sum;
+        }
+
+        public Dictionary<string, OrdersProduct> ReturnOrderedCart()
+        {
+            Dictionary<string, OrdersProduct> ordered = new Dictionary<string, OrdersProduct>();
+            foreach (IProduct item in cart)
+            {
+                if (!ordered.ContainsKey(item.Barcode))
+                {
+                    ordered.Add(item.Barcode, new OrdersProduct(1, item.Amount));
+                }
+                else
+                {
+                    ordered[item.Barcode].Price += item.Amount;
+                    ordered[item.Barcode].Amount++;
+                }
+            }
+            return ordered;
+        }
+        public void AddOrder()
+        {
+            Dictionary<string, OrdersProduct> dict = ReturnOrderedCart();
+
+            IPurchaseRepository repository0 = new PurchaseRepository();
+            IProductRepository repository1 = new ProductRepository();
+            IOrdersProductRepository repository2 = new OrdersProductRepository();
+            var order = new Purchase();
+            repository0.Add(order);
+            foreach (string key in dict.Keys)
+            {
+                var product = repository1.GetByBarcode(key);
+                dict[key].Item_id = product.Id;
+                dict[key].Order_id = order.Id;
+                repository2.Add(dict[key]);
+            }
+            cart.Clear();
         }
     }
 }

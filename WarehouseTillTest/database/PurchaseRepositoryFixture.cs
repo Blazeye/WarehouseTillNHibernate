@@ -1,6 +1,6 @@
 ﻿using NHibernate;
 using NHibernate.Cfg;
-using WarehouseTill.products;
+using WarehouseTill.model;
 using WarehouseTill.repository;
 using NUnit.Framework;
 using System.Reflection;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace WarehouseTillTest.database
 {
     [TestFixture]
-    public class ProductRepository_Fixture
+    public class OrdersProductRepositoryFixture
 
     {
         private ISessionFactory _sessionFactory;
@@ -36,7 +36,8 @@ namespace WarehouseTillTest.database
             string path = Uri.UnescapeDataString(uri.Path);
 
             _configuration.Configure(path + "#/WarehouseTill/WarehouseTill/database/hibernate.cfg.xml");
-            _configuration.AddAssembly(typeof(Product).Assembly);
+
+            _configuration.AddAssembly(typeof(Purchase).Assembly);
             _sessionFactory = _configuration.BuildSessionFactory();
         }
         [SetUp]
@@ -44,119 +45,98 @@ namespace WarehouseTillTest.database
         { // done for every test
             using (ISession session = _sessionFactory.OpenSession())
             {
-                session.CreateQuery("delete from Product where Description='testProduct'").ExecuteUpdate();
+                session.CreateQuery("delete from Purchase where Date='testPurchase'").ExecuteUpdate();
             }
         }
         [Test]
-        public void TestGetAllProducts()
-        {
-            //prepare
-            IProductRepository repository = new ProductRepository();
-
-            //run
-            using (ISession session = _sessionFactory.OpenSession())
-            {
-                List<IProduct> result = repository.GetAllProducts();
-                //var fromDb = session.CreateQuery("from Product").List();
-                //validate
-                Assert.NotNull(result);
-                Assert.IsNotEmpty(result);
-                Assert.IsInstanceOf<List<IProduct>>(result);
-            }
-        }
-        [Test]
-        public void TestCanAddNewProduct()
+        public void TestCanAddNewOrder()
         {
             // prepare
-            var product = new Product("0000", "testProduct", 2.500m);
-            IProductRepository repository = new ProductRepository();
+            var order = new Purchase() { Date = "testPurchase" };
+            IPurchaseRepository repository = new PurchaseRepository();
 
             // run
-            repository.Add(product);
+            repository.Add(order);
 
             // validate
             // use session to try to load the product
 
             using (ISession session = _sessionFactory.OpenSession())
             {
-                var fromDb = session.Get<Product>(product.Id);
+                var fromDb = session.Get<Purchase>(order.Id);
 
                 // Test that the product was successfully inserted
 
                 Assert.IsNotNull(fromDb);
-                Assert.AreNotSame(product, fromDb);
-                Assert.AreEqual(product.Barcode, fromDb.Barcode);
-
+                Assert.AreNotSame(order, fromDb);
+                Assert.AreEqual(order.Id, fromDb.Id);
+                Assert.AreEqual(order.Date, fromDb.Date);
             }
-
         }
         [Test]
-        public void TestGetByBarcode()
+        public void TestGetById()
         {
             // prepare
-            Product testProduct = new Product("8888", "testProduct", 12.34m);
+            Purchase testPurchase = new Purchase() { Date = "testPurchase" };
             using (ISession session = _sessionFactory.OpenSession())
             {
-                session.Save(testProduct);
+                session.Save(testPurchase);
             }
-            IProductRepository repository = new ProductRepository();
+            IPurchaseRepository repository = new PurchaseRepository();
 
             // run
-            var result1 = repository.GetByBarcode("2222");
-            var result2 = repository.GetByBarcode("8888");
+            var result = repository.GetById(testPurchase.Id);
 
             // validate
-            Assert.Null(result1);
-            Assert.NotNull(result2);
-            Assert.AreEqual(testProduct, result2);
+            Assert.NotNull(result);
+            Assert.AreEqual(testPurchase, result);
 
         }
         [Test]
-        public void TestCanUpdateProduct()
+        public void TestCanUpdate()
         {
             //Prepare
-            Product originalProduct = new Product("1111", "testProduct", 11.110m);
-            Product testProduct = new Product("1234", "testProduct", 88.880m);
-            IProductRepository repository = new ProductRepository();
+            Purchase originalPurchase = new Purchase(){ Date = "failure" };
+            Purchase testPurchase = new Purchase() { Date = "testPurchase" };
+            IPurchaseRepository repository = new PurchaseRepository();
 
             //Run
             using (ISession session = _sessionFactory.OpenSession())
             {
-                session.Save(originalProduct);
-                testProduct.Id = originalProduct.Id;
-                repository.Update(testProduct);
+                session.Save(originalPurchase);
+                testPurchase.Id = originalPurchase.Id;
+                repository.Update(testPurchase);
             }
             //Validate
             using (ISession session = _sessionFactory.OpenSession())
             {
                 //second session is used so fromDB get to take the changed table entry
-                var fromDb = session.Get<Product>(originalProduct.Id);
+                var fromDb = session.Get<Purchase>(originalPurchase.Id);
 
                 Assert.IsNotNull(fromDb);
-                Assert.AreEqual(testProduct.Barcode, fromDb.Barcode);
+                Assert.AreEqual(testPurchase.Date, fromDb.Date);
             }
         }
         [Test]
-        public void TestCanDeleteProduct()
+        public void TestCanDelete()
         {
             //prepare
-            Product testProduct = new Product("1111", "testProduct", 11.110m);
-            IProductRepository repository = new ProductRepository();
+            Purchase testPurchase = new Purchase() { Date="testPurchase" };
+            PurchaseRepository repository = new PurchaseRepository();
 
             //run
             using (ISession session = _sessionFactory.OpenSession())
             {
-                session.Save(testProduct);
-                repository.Remove(testProduct);
+                session.Save(testPurchase);
+                repository.Remove(testPurchase);
             }
             //validate
             using (ISession session = _sessionFactory.OpenSession())
             {
-                var fromDb = session.Get<Product>(testProduct.Id);
+                var fromDb = session.Get<Purchase>(testPurchase.Id);
                 Assert.IsNull(fromDb);
             }
         }
     }
 }
-
 

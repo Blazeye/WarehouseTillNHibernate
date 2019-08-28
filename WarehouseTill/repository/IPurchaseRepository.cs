@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WarehouseTill.model;
 
 namespace WarehouseTill.repository
 {
-    interface IPurchaseRepository
+    public interface IPurchaseRepository
     {
+        void Add(Purchase purchase);
+        void Update(Purchase purchase);
+        Purchase GetById(int purchaseId);
     }
 }
