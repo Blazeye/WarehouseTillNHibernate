@@ -14,12 +14,6 @@ namespace WarehouseTill.products
         {
             // Add 4 example products to the internal data structure of this catalog here
             ProductList = new List<IProduct>();
-            //{
-            //    new Product("1234", "Bonko-boter, weer 'ns echte roomboter...", 2.120m) { },
-            //    new Product("9902", "St. Jantje: De beste komijnenkaas!", 8.430m) { },
-            //    new Product("3568", "Berensterke botten met Borbonje!", 1.230m) { },
-            //    new Product("7324", "Eieren, van vrijlopende scharrelkippen.", 1.750m) { },
-            //};
             IProductRepository repository = new ProductRepository();
             ProductList = repository.GetAllProducts();
 
@@ -33,10 +27,6 @@ namespace WarehouseTill.products
         {
 
             Product rightProduct = null;
-
-            //IProductRepository repository = new ProductRepository();
-            //rightProduct = repository.GetByBarcode(barcode);
-
 
             foreach (Product item in ProductList)
             {

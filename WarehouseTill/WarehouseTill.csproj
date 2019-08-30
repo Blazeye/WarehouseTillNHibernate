@@ -110,6 +110,7 @@
     <Compile Include="till\ObjectIsNullException.cs" />
     <Compile Include="till\ReversedComparer.cs" />
     <Compile Include="till\Till.cs" />
+    <Compile Include="warehouse\WarehouseEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
