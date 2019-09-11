@@ -20,8 +20,8 @@ namespace WarehouseTill
 
         // interface functions 
 
-        IProduct IProductCatalog.FindProductForBarcode(string barcode) {
-            return ProductToReturn;
+        Product IProductCatalog.FindProductForBarcode(string barcode) {
+            return (Product)ProductToReturn;
         }
 
         IList<IProduct> IProductCatalog.GetAllProducts() {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using WarehouseTill.display;
 using WarehouseTill.products;
 using WarehouseTill.till;
+using WarehouseTill.warehouse;
 
 namespace EventsTillTest.till
 {
@@ -13,13 +14,13 @@ namespace EventsTillTest.till
         public List<IProduct> cart { get; set; } = new List<IProduct>();
         private decimal sum { get; set; } = 0;
         private IProductCatalog List { get; set; } = null;
-        private ITillDisplay Display { get; set; } = null;
+        //private ITillDisplay Display { get; set; } = null;
  
 
-        public void SetDisplayInterface(ITillDisplay a)
-        {
+        //public void SetDisplayInterface(ITillDisplay a)
+        //{
 
-        }
+        //}
         public bool HandleBarcode(string barcode)
         {
             return BarcodeToReturn;
@@ -39,6 +40,19 @@ namespace EventsTillTest.till
             
         }
         public void AddOrder()
+        {
+
+        }
+
+        public void HandleFilledCart(object s, ItemEventArgs e)
+        {
+
+        }
+        public void HandleShowingScanned(object s, EventArgs e)
+        {
+
+        }
+        public void HandleShowingProducts(object s, EventArgs e)
         {
 
         }

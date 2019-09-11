@@ -2,14 +2,13 @@
 using NHibernate.Dialect;
 using NHibernate.Driver;
 
-using System;
-using System.Linq;
-using System.Reflection;
 using WarehouseTill.display;
 using WarehouseTill.products;
 using WarehouseTill.till;
+using WarehouseTill.warehouse;
+using WarehouseTill.printer;
+using WarehouseTill.discounts;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace WarehouseTill
 {
@@ -17,43 +16,6 @@ namespace WarehouseTill
     {
         static void Main(string[] args)
         {
-
-//            var cfg = new Configuration();
-
-//            String DataSource = (localdb)\MSSQLLocalDB;
-//            String InitialCatalog = WareHouse;
-//            String IntegratedSecurity = True;
-//            String ConnectTimeout = 30;
-//            String Encrypt = "False";
-//            String TrustServerCertificate = "False";
-//            String ApplicationIntent = "ReadWrite;
-//            String MultiSubnetFailover = False;
-
-//            cfg.DataBaseIntegration(x => {
-//                x.ConnectionString = "Data Source + " +
-//"Initial Catalog + Integrated Security + Connect Timeout + " +
-//"Encrypt + TrustServerCertificate + ApplicationIntent + " +
-//"MultiSubnetFailover";
-
-//                x.Driver<SqlClientDriver>();
-//                x.Dialect<MsSql2008Dialect>();
-//            });
-
-//            cfg.AddAssembly(Assembly.GetExecutingAssembly());
-//            var sefact = cfg.BuildSessionFactory();
-
-//            using (var session = sefact.OpenSession())
-//            {
-//                using (var tx = session.BeginTransaction())
-//                {
-//                    //perform database logic
-//                    tx.Commit();
-//                }
-
-//                Console.ReadLine();
-//            }
-
-
 
 
             SortedDictionary<decimal, int> StartRegister()
@@ -79,17 +41,27 @@ namespace WarehouseTill
             }
 
 
-            //ICashRegister register = new CashRegister(StartRegister());
-
             // Make a new 'till' based on the ITill interface
-            ITill till = new Till(new ProductCatalog(), new CashRegister(StartRegister()));
+            Till till = new Till(new ProductCatalog(), new CashRegister(StartRegister()));
+            Warehouse wh = new Warehouse();
+            Printer pr = new Printer();
+            DiscountManager dsc = new DiscountManager();
+
+            till.ItemScanned += wh.HandleAddItem;
+            till.ItemScanned += till.HandleFilledCart;
+            till.ItemScanned += dsc.HandleCheckDiscount;
+            dsc.ItemDiscounted += till.HandleAddDiscount;
+            till.ClearDiscountCheck += dsc.HandleClearDiscountCheck;
+            till.ItemPayed += pr.HandlePrintItems;
+            
 
             // Construct a console interaction file
             var consoleInteraction = new ConsoleTillDisplay(till);
+            consoleInteraction.ShowingScanned += till.HandleShowingScanned;
+            consoleInteraction.ShowingProducts += till.HandleShowingProducts;
 
             // Start the main loop
             consoleInteraction.Run();
-
 
         }
     }

@@ -10,7 +10,7 @@ namespace WarehouseTill.products
         /// <returns>the product or <c>null</c> if not found</returns>
         /// 
 
-        IProduct FindProductForBarcode(string barcode);
+        Product FindProductForBarcode(string barcode);
 
         /// <returns>a list of all products</returns>
         IList<IProduct> GetAllProducts();

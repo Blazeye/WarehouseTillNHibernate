@@ -35,7 +35,6 @@ namespace WarehouseTill.repository
                     try
                     {
                         return session.Get<Purchase>(purchaseId);
-                        tx.Commit();
                     }
                     catch (Exception ex)
                     {

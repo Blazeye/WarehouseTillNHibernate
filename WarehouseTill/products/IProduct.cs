@@ -13,6 +13,6 @@
         /// <summary>
         /// Amount in euro's
         /// </summary>
-        decimal Amount { get; }
+        decimal Amount { get; set; }
     }
 }

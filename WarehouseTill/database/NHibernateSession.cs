@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using NHibernate.Cfg;
+﻿using System;
+using System.Reflection;
 using NHibernate;
-using System;
+using NHibernate.Cfg;
 
 namespace WarehouseTill.database
 {

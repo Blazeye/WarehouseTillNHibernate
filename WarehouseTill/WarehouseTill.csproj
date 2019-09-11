@@ -86,12 +86,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="database\NHibernateSession.cs" />
+    <Compile Include="discounts\DiscountEventArgs.cs" />
+    <Compile Include="discounts\DiscountManager.cs" />
     <Compile Include="display\ConsoleTillDisplay.cs" />
-    <Compile Include="display\ITillDisplay.cs" />
     <Compile Include="model\IOrdersProduct.cs" />
     <Compile Include="model\IPurchase.cs" />
     <Compile Include="model\OrdersProduct.cs" />
     <Compile Include="model\Purchase.cs" />
+    <Compile Include="printer\OrdersListEventArgs.cs" />
+    <Compile Include="printer\Printer.cs" />
     <Compile Include="products\IProduct.cs" />
     <Compile Include="products\IProductCatalog.cs" />
     <Compile Include="products\Product.cs" />
@@ -110,7 +113,8 @@
     <Compile Include="till\ObjectIsNullException.cs" />
     <Compile Include="till\ReversedComparer.cs" />
     <Compile Include="till\Till.cs" />
-    <Compile Include="warehouse\WarehouseEventArgs.cs" />
+    <Compile Include="warehouse\ItemEventArgs.cs" />
+    <Compile Include="warehouse\Warehouse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

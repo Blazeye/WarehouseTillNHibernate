@@ -9,7 +9,7 @@ namespace WarehouseTill
 
         public string Barcode { get; }
         public string Description { get; }
-        public decimal Amount { get; }
+        public decimal Amount { get; set; }
 
         public TestProduct(int productId) {
             Barcode = productId.ToString();

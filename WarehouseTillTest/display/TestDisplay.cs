@@ -7,7 +7,7 @@ namespace WarehouseTill
     /// <summary>
     /// Test implementation of the ITillDisplay interface for NUnit testing
     /// </summary>
-    internal class TestDisplay : ITillDisplay
+    internal class TestDisplay
     {
         public string ReceivedLine1 { get; private set; }
         public string ReceivedLine2 { get; private set; }

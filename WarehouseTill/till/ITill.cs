@@ -1,6 +1,8 @@
 ﻿using WarehouseTill.display;
 using System.Collections.Generic;
 using WarehouseTill.products;
+using System;
+using WarehouseTill.warehouse;
 
 namespace WarehouseTill.till
 {
@@ -10,11 +12,11 @@ namespace WarehouseTill.till
     public interface ITill
     {
         List<IProduct> cart { get; set; }
-        /// <summary>
-        /// Installs an interface to be used when displaying
-        /// </summary>
-        /// <param name="tillDisplay">The interface to use from now on</param>
-        void SetDisplayInterface(ITillDisplay tillDisplay);
+        ///// <summary>
+        ///// Installs an interface to be used when displaying
+        ///// </summary>
+        ///// <param name="tillDisplay">The interface to use from now on</param>
+        //void SetDisplayInterface(ITillDisplay tillDisplay);
 
         /// <summary>
         /// Handle a scan of a barcode
@@ -30,12 +32,15 @@ namespace WarehouseTill.till
         /// <returns>the change to return or null on failure</returns>
         IDictionary<decimal, int> InitiatePayment(decimal amount);
 
-        /// <summary>
-        /// Show all products
-        /// </summary>
-        void ShowAllProducts();
+        ///// <summary>
+        ///// Show all products
+        ///// </summary>
+        //void ShowAllProducts();
 
-        void ShowScannedItems();
+        //void ShowScannedItems();
         void AddOrder();
+        void HandleFilledCart(object s, ItemEventArgs e);
+        void HandleShowingScanned(object s, EventArgs e);
+        void HandleShowingProducts(object s, EventArgs e);
     }
 }
